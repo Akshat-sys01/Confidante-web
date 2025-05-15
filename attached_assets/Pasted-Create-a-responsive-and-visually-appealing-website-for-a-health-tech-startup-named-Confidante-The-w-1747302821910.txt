@@ -1,0 +1,58 @@
+Create a responsive and visually appealing website for a health tech startup named Confidante. The website should reflect a soft, modern, and welcoming design language with subtle transitions and animations. Use soft colors (e.g., light blues, teals, and warm neutrals), rounded corners, smooth scrolling, and a calm aesthetic throughout. Use clean and modern fonts, and maintain consistent spacing and padding.
+
+The website should include the following sections:
+
+Hero Section
+
+A warm and inspiring introduction with a background image (I'll provide later) that reflects holistic health.
+
+A short tagline: "Health and well-being, beyond the physical."
+
+A prominent call-to-action button (e.g., "Get Started" or "Explore More").
+
+Smooth fade-in animations for text and button.
+
+Latest Insights
+
+Display the latest blog posts or educational insights in card layout.
+
+Include hover effects on cards with transitions.
+
+About Confidante
+
+A brief description (use this text):
+"Confidante is a health and well-being startup dedicated to educating and supporting all aspects of health—beyond the physical. While many focus on physical health, we address the often-overlooked areas of mental, emotional, and social well-being. Our mission is to bring essential health education to schools and build an accessible platform where learning about these critical topics is easier than ever. We don’t just start conversations, we turn them into real change."
+
+Use fade-in or scroll animations to reveal content.
+
+Our Team
+
+Cards or grid layout with photo, name, and role for each team member.
+
+Optional modal or hover details for bios.
+
+Our Services
+
+List of services offered (e.g., School Programs, Mental Health Education, Community Workshops).
+
+Icons or illustrations for each, with animated transitions.
+
+Contact Info
+
+Display contact details (email, phone, location).
+
+Include a contact form with fields: name, email, message.
+
+When someone submits the form, the message should be sent to my email (you can use a service like EmailJS or Formspree).
+
+Chatbot
+
+Integrate a simple chatbot widget on the bottom right corner for live support or auto-response. You can use third-party services like Chatbase or ChatBot.com or write a basic scripted chatbot.
+
+Additional Requirements:
+
+Add smooth animations and transitions (e.g., scroll-based fade-ins, hover effects, button animations).
+
+Ensure the site is fully responsive on desktop, tablet, and mobile.
+
+Keep the layout spacious, soft, and calming.
