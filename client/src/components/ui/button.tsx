@@ -5,53 +5,30 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg hover:-translate-y-0.5",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-md hover:shadow-lg hover:-translate-y-0.5",
-        outline:
-          "border-2 border-primary text-primary bg-transparent hover:bg-primary/10 hover:shadow-sm",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-md hover:shadow-lg hover:-translate-y-0.5",
-        accent:
-          "bg-accent text-accent-foreground hover:bg-accent/80 shadow-md hover:shadow-lg hover:-translate-y-0.5",
-        soft: 
-          "bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-sm",
-        ghost: 
-          "hover:bg-neutral-100 text-neutral-700 hover:text-primary",
-        link: 
-          "text-primary font-medium hover:text-primary/80 hover:underline underline-offset-4",
+        default: "bg-primary text-white hover:bg-primary/90 shadow-md hover:shadow-lg hover:-translate-y-0.5",
+        destructive: "bg-destructive text-white hover:bg-destructive/90 shadow-md hover:shadow-lg",
+        outline: "border-2 border-primary text-primary bg-transparent hover:bg-primary/10",
+        secondary: "bg-secondary text-white hover:bg-secondary/90 shadow-md hover:shadow-lg hover:-translate-y-0.5",
+        accent: "bg-accent text-accent-foreground hover:bg-accent/90 shadow-md hover:shadow-lg hover:-translate-y-0.5",
+        soft: "bg-primary/10 text-primary hover:bg-primary/20",
+        ghost: "hover:bg-neutral-100 text-neutral-700 hover:text-primary",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-10 px-5 py-2 rounded-lg",
-        sm: "h-9 px-4 py-1.5 rounded-lg text-xs",
-        md: "h-10 px-5 py-2 rounded-lg",
-        lg: "h-12 px-8 py-3 rounded-xl text-base",
-        xl: "h-14 px-10 py-4 rounded-xl text-base",
+        default: "h-10 px-5 py-2",
+        sm: "h-9 px-4 py-1.5 text-xs",
+        lg: "h-12 px-8 py-3 text-base rounded-xl",
+        xl: "h-14 px-10 py-4 text-base rounded-xl",
         icon: "h-10 w-10 rounded-full",
       },
-      roundedness: {
-        default: "rounded-lg",
-        md: "rounded-xl",
-        lg: "rounded-2xl",
-        full: "rounded-full",
-        none: "rounded-none",
-      },
-      animation: {
-        none: "",
-        subtle: "transition-all duration-300",
-        bounce: "transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0",
-        scale: "transition-all duration-300 hover:scale-105 active:scale-100",
-      }
     },
     defaultVariants: {
       variant: "default",
       size: "default",
-      roundedness: "default",
-      animation: "subtle",
     },
   }
 )
@@ -63,11 +40,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, roundedness, animation, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, roundedness, animation, className }))}
+        className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       />

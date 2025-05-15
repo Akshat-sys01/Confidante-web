@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { SectionTitle } from "@/components/ui/section-title";
+import { Button } from "@/components/ui/button";
 
 interface Service {
   icon: string;
@@ -7,6 +8,8 @@ interface Service {
   description: string;
   iconBg: string;
   iconColor: string;
+  badgeText?: string;
+  features?: string[];
 }
 
 const services: Service[] = [
@@ -15,62 +18,198 @@ const services: Service[] = [
     title: "School Programs",
     description: "Comprehensive health education programs tailored for K-12 schools, integrating mental, emotional, and social health curricula alongside physical wellness.",
     iconBg: "bg-primary/20",
-    iconColor: "text-primary"
+    iconColor: "text-primary",
+    badgeText: "Most Popular",
+    features: [
+      "Customized curriculum design",
+      "Teacher resources and training",
+      "Student workbooks and materials",
+      "Progress assessment tools"
+    ]
   },
   {
     icon: "fas fa-brain",
     title: "Mental Health Education",
-    description: "Interactive workshops and engaging digital resources designed to build understanding, reduce stigma, and promote help-seeking behaviors for mental health concerns.",
+    description: "Interactive workshops and digital resources designed to build understanding, reduce stigma, and promote help-seeking behaviors for mental health concerns.",
     iconBg: "bg-secondary/20",
-    iconColor: "text-secondary"
+    iconColor: "text-secondary",
+    features: [
+      "Evidence-based modules",
+      "Age-appropriate content",
+      "Stigma reduction focus",
+      "Practical coping strategies"
+    ]
   },
   {
     icon: "fas fa-users",
     title: "Community Workshops",
     description: "In-person and virtual community sessions that address key health topics, provide practical skills, and foster supportive local networks for ongoing wellness.",
     iconBg: "bg-accent/20",
-    iconColor: "text-accent"
+    iconColor: "text-accent",
+    features: [
+      "Interactive group activities",
+      "Expert-led discussions",
+      "Take-home resources",
+      "Community-building exercises"
+    ]
   },
   {
     icon: "fas fa-graduation-cap",
     title: "Professional Development",
     description: "Training programs for educators, counselors, and health professionals to enhance their ability to support holistic wellness in their students and clients.",
     iconBg: "bg-primary/20",
-    iconColor: "text-primary"
+    iconColor: "text-primary",
+    badgeText: "New",
+    features: [
+      "Continuing education credits",
+      "Skills-based learning",
+      "Research-backed methods",
+      "Implementation support"
+    ]
   }
 ];
 
 export function ServicesSection() {
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 100
+      }
+    }
+  };
+
   return (
-    <section id="services" className="py-20 bg-gradient-to-br from-secondary/10 to-primary/10">
-      <div className="container">
-        <div className="text-center mb-16 reveal">
+    <section id="services" className="py-24 bg-gradient-to-br from-soft-peach via-white to-soft-teal relative overflow-hidden">
+      {/* Decorative pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern"></div>
+      </div>
+      
+      {/* Floating elements */}
+      <motion.div 
+        className="absolute top-20 left-[10%] w-32 h-32 rounded-full bg-primary/5 blur-3xl" 
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut"
+        }}
+      />
+      
+      <motion.div 
+        className="absolute bottom-20 right-[10%] w-40 h-40 rounded-full bg-secondary/5 blur-3xl" 
+        animate={{
+          scale: [1, 1.3, 1],
+          opacity: [0.3, 0.6, 0.3]
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut"
+        }}
+      />
+      
+      <div className="container relative z-10">
+        <div className="text-center mb-16">
           <SectionTitle
             title="Our Services"
             description="Discover how Confidante can support your school, organization, or community with our holistic health programs."
+            accentColor="secondary"
           />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {services.map((service, index) => (
             <motion.div
               key={index}
-              className="bg-white rounded-xl shadow-sm p-8 flex flex-col md:flex-row gap-6 items-start reveal card-hover"
-              style={{ animationDelay: `${index * 0.1}s` }}
-              whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+              className="relative bg-white rounded-2xl shadow-lg overflow-hidden h-full"
+              variants={cardVariants}
+              whileHover={{ y: -8, boxShadow: "0 20px 40px -5px rgba(0, 0, 0, 0.1)" }}
+              transition={{ duration: 0.3 }}
             >
-              <div className={`w-16 h-16 rounded-full ${service.iconBg} flex items-center justify-center flex-shrink-0`}>
-                <i className={`${service.icon} ${service.iconColor} text-2xl`}></i>
-              </div>
-              <div>
-                <h3 className="font-heading text-xl font-medium mb-3">{service.title}</h3>
-                <p className="text-neutral-800/70 mb-4">{service.description}</p>
-                <a href="#" className="text-primary font-medium hover:text-primary/80 transition-colors flex items-center gap-2">
-                  Learn More <i className="fas fa-arrow-right text-sm"></i>
-                </a>
+              {service.badgeText && (
+                <div className="absolute top-6 right-6 z-10">
+                  <span className="inline-block px-3 py-1 bg-primary text-white text-xs font-medium rounded-full shadow-sm">
+                    {service.badgeText}
+                  </span>
+                </div>
+              )}
+              
+              <div className="p-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`w-16 h-16 rounded-xl ${service.iconBg} flex items-center justify-center flex-shrink-0`}>
+                    <i className={`${service.icon} ${service.iconColor} text-2xl`}></i>
+                  </div>
+                  <h3 className="font-heading text-xl font-semibold">{service.title}</h3>
+                </div>
+                
+                <p className="text-neutral-700 mb-6 leading-relaxed">{service.description}</p>
+                
+                {service.features && (
+                  <div className="mb-8">
+                    <h4 className="text-sm font-semibold uppercase tracking-wider text-neutral-500 mb-3">Key Features</h4>
+                    <ul className="space-y-2">
+                      {service.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-baseline gap-2 text-neutral-700">
+                          <span className="text-primary"><i className="fas fa-check-circle"></i></span>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                
+                <div className="flex justify-between items-center">
+                  <Button variant="soft" size="sm">
+                    Learn More
+                    <i className="fas fa-arrow-right text-xs ml-1"></i>
+                  </Button>
+                  
+                  <Button variant="ghost" size="sm">
+                    Request Info
+                  </Button>
+                </div>
               </div>
             </motion.div>
           ))}
+        </motion.div>
+        
+        <div className="mt-16 text-center">
+          <div className="max-w-3xl mx-auto bg-white/50 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-white/80">
+            <h3 className="font-heading text-2xl font-semibold mb-4">Need a customized solution?</h3>
+            <p className="text-neutral-700 mb-6">We can create tailored programs to meet your organization's specific needs.</p>
+            <Button size="lg" className="font-medium px-10">
+              Contact Our Team
+              <i className="fas fa-chevron-right ml-2"></i>
+            </Button>
+          </div>
         </div>
       </div>
     </section>
