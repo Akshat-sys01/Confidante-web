@@ -13,21 +13,28 @@
   --card-foreground: 20 14.3% 4.1%;
   --border: 20 5.9% 90%;
   --input: 20 5.9% 90%;
-  --primary: 174 65% 55%; /* Teal #4ECDC4 */
-  --primary-foreground: 211 100% 99%;
-  --secondary: 197 64% 70%; /* Light Blue #7DCFE8 */
+  
+  /* Updated color palette based on logo */
+  --primary: 35 90% 65%; /* Warm Orange from logo: #FFAE42 */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 35 90% 75%; /* Lighter Orange/Peach: #FFCB85 */
   --secondary-foreground: 24 9.8% 10%;
-  --accent: 35 100% 55%; /* Warm Accent #FF9F1C */
+  --accent: 178 75% 65%; /* Teal complement: #5EEAE0 */
   --accent-foreground: 24 9.8% 10%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 60 9.1% 97.8%;
-  --ring: 174 65% 55%;
-  --radius: 1rem;
+  --ring: 35 90% 65%;
+  --radius: 1.25rem; /* Slightly more rounded corners */
 
   /* Custom colors */
-  --neutral-100: 210 10% 97%;
-  --neutral-200: 210 10% 92%;
-  --neutral-800: 210 20% 33%;
+  --neutral-100: 28 30% 97%; /* Warmer neutral */
+  --neutral-200: 28 20% 92%; /* Warmer neutral */
+  --neutral-800: 28 15% 33%; /* Warmer neutral */
+  
+  /* Additional colors */
+  --soft-peach: 25 100% 94%;
+  --soft-teal: 178 65% 95%;
+  --soft-blue: 197 70% 94%;
 }
 
 .dark {
