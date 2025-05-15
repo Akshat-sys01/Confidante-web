@@ -1,0 +1,57 @@
+Please enhance the Confidante website with the following improvements and functionality:
+
+💬 Chatbot Improvements:
+
+Enhance the chatbot’s design to match the soft, health-focused theme of the site.
+
+Use a round floating icon that expands into a friendly, smooth chat interface.
+
+Style the bot to feel human-centered and welcoming (e.g., soft blue background, rounded message bubbles).
+
+Add smart greeting behavior: show a welcome message when the page loads and suggest helpful topics like “Learn about our programs,” “Talk to a specialist,” etc.
+
+Keep the chatbot fixed to the bottom right of the page on both desktop and mobile.
+
+🚀 "Get Started" Button (Scroll Functionality):
+
+Add a “Get Started” button in both the navigation bar and the hero section.
+
+Both buttons should implement smooth scroll behavior to the Latest Insights section.
+
+Use a scroll animation (ease-in-out, 800ms) and visually highlight the section when scrolled into view.
+
+🔗 Navigation Scroll Behavior:
+
+Update the navigation links for smooth scroll functionality:
+
+Home → scrolls to the Hero Section
+
+Insights → scrolls to the Latest Insights section
+
+Use smooth scrolling and active section highlighting as users navigate.
+
+Add a small animation (e.g., underline grow or color fade) to show the active link.
+
+🖼️ Logo Update (Not Theme):
+
+Replace the existing logo with the one I’ve uploaded.
+
+Ensure the logo fits naturally in the navigation pane on both desktop and mobile.
+
+Do not change the theme; only update the logo image and adjust spacing or size if necessary for visual balance.
+
+💡 Services Section Buttons:
+
+Add working functionality to the “Learn More” and “Request Info” buttons under the Our Services section:
+
+“Learn More” → Scrolls or opens a modal with additional details about the specific service.
+
+“Request Info” → Opens a contact form or scrolls to the contact section where users can submit a message.
+
+Include hover animations and transitions to enhance interaction feedback.
+
+🌐 General UI Consistency:
+
+Ensure all updates follow the existing design language: soft color palette, rounded corners, smooth animations, and responsive layout.
+
+Keep performance optimized and maintain accessibility best practices (focus outlines, alt texts, proper contrast).

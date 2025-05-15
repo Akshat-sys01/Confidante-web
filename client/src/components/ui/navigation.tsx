@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface NavLink {
   name: string;
@@ -8,18 +9,18 @@ interface NavLink {
 }
 
 const navigationLinks: NavLink[] = [
-  { name: "Home", href: "/" },
-  { name: "Insights", href: "/blog" },
+  { name: "Home", href: "/#hero" },
+  { name: "Insights", href: "/#insights" },
   { name: "About", href: "/#about" },
-  { name: "Team", href: "/#team" },
   { name: "Services", href: "/#services" },
+  { name: "Team", href: "/#team" },
   { name: "Contact", href: "/#contact" }
 ];
 
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeLink, setActiveLink] = useState("/");
+  const [activeLink, setActiveLink] = useState("/#hero");
 
   // Function to handle scroll and update navbar styling
   useEffect(() => {
@@ -28,9 +29,9 @@ export function Navigation() {
       
       // Update active link based on scroll position
       const sections = document.querySelectorAll('section[id]');
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + 80;
       
-      if (window.location.pathname === '/') {
+      if (window.location.pathname === '/' || window.location.pathname === '') {
         sections.forEach(section => {
           const sectionTop = (section as HTMLElement).offsetTop;
           const sectionHeight = (section as HTMLElement).offsetHeight;
@@ -53,25 +54,36 @@ export function Navigation() {
 
   // Set active link based on current pathname on initial load
   useEffect(() => {
-    if (window.location.pathname !== '/') {
+    if (window.location.pathname !== '/' && window.location.pathname !== '') {
       setActiveLink(window.location.pathname);
+    } else {
+      setActiveLink("/#hero");
     }
   }, []);
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   
   // Smooth scroll function for anchor links
-  const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>, href: string) => {
     if (href.startsWith('/#')) {
       e.preventDefault();
       const targetId = href.replace('/#', '');
       const element = document.getElementById(targetId);
       
       if (element) {
+        // Highlight the target section temporarily
+        const previousClass = element.className;
+        element.classList.add('scroll-highlight');
+        
         window.scrollTo({
           top: element.offsetTop - 80,
           behavior: 'smooth'
         });
+        
+        // Remove highlight after animation completes
+        setTimeout(() => {
+          element.classList.remove('scroll-highlight');
+        }, 1500);
       }
       
       // Update active link
@@ -81,7 +93,15 @@ export function Navigation() {
       if (isMobileMenuOpen) {
         setIsMobileMenuOpen(false);
       }
+    } else if (href === "/blog" || href.includes("/blog/")) {
+      // For non-anchor links like blog, let them work normally
+      setActiveLink(href);
     }
+  };
+  
+  // Function to scroll to insights section
+  const scrollToInsights = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>) => {
+    smoothScroll(e, '/#insights');
   };
 
   return (
@@ -89,7 +109,7 @@ export function Navigation() {
       className={cn(
         "fixed w-full z-50 transition-all duration-500",
         isScrolled 
-          ? "py-2 bg-white/90 backdrop-blur-sm shadow-lg shadow-neutral-200/30" 
+          ? "py-2 bg-white/95 backdrop-blur-md shadow-lg shadow-neutral-200/30" 
           : "py-4 bg-transparent"
       )}
     >
@@ -102,11 +122,15 @@ export function Navigation() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="w-10 h-10 mr-2">
-              <img 
-                src="/src/assets/logo.png" 
+            <div className="h-12 w-12 mr-2 flex items-center justify-center">
+              <motion.img 
+                src="/src/assets/new-logo.png"
                 alt="Confidante Logo" 
-                className="w-full h-full object-contain"
+                className="h-full w-full object-contain"
+                initial={{ rotate: -5 }}
+                animate={{ rotate: 0 }}
+                transition={{ duration: 0.5 }}
+                whileHover={{ scale: 1.05, rotate: 5 }}
               />
             </div>
             <span className="text-2xl font-heading font-semibold text-primary">Confidante</span>
@@ -129,33 +153,37 @@ export function Navigation() {
                   href={link.href}
                   onClick={(e) => smoothScroll(e, link.href)}
                   className={cn(
-                    "relative font-medium px-4 py-2 rounded-full transition-all duration-300 inline-block",
+                    "relative font-medium px-4 py-2 transition-all duration-300 inline-flex items-center",
                     activeLink === link.href 
                       ? "text-primary" 
                       : "text-neutral-600 hover:text-primary"
                   )}
                 >
                   {link.name}
-                  {activeLink === link.href && (
-                    <motion.span 
-                      className="absolute bottom-0 left-0 right-0 h-1 bg-primary/20 rounded-full mx-3"
-                      layoutId="activeIndicator"
-                      transition={{ type: "spring", duration: 0.6 }}
-                    />
-                  )}
+                  
+                  {/* Animated underline indicator */}
+                  <div className="absolute left-0 right-0 bottom-0 h-0.5 flex justify-center">
+                    {activeLink === link.href && (
+                      <motion.span 
+                        className="h-full bg-primary rounded-full"
+                        layoutId="navIndicator"
+                        style={{ width: '50%' }}
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                  </div>
                 </a>
               </motion.div>
             ))}
             
-            <motion.a
-              href="/#contact"
-              onClick={(e) => smoothScroll(e, '/#contact')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="ml-4 px-5 py-2 rounded-full bg-primary text-white font-medium shadow-md hover:shadow-lg hover:bg-primary/90 transition-all duration-300"
+            <Button
+              onClick={scrollToInsights}
+              variant="default"
+              size="sm"
+              className="ml-4 shadow-md"
             >
               Get Started
-            </motion.a>
+            </Button>
           </motion.nav>
           
           {/* Mobile Navigation Toggle */}
@@ -200,25 +228,63 @@ export function Navigation() {
                     transition={{ duration: 0.2, delay: index * 0.05 }}
                   >
                     {link.name}
+                    {activeLink === link.href && (
+                      <motion.span 
+                        className="inline-block w-1.5 h-1.5 rounded-full bg-primary ml-2"
+                        layoutId="mobileIndicator"
+                      />
+                    )}
                   </motion.a>
                 ))}
                 
-                <motion.a
-                  href="/#contact"
-                  onClick={(e) => smoothScroll(e, '/#contact')}
-                  className="block py-3 px-4 mt-2 text-center font-medium bg-primary text-white rounded-xl shadow-sm"
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2, delay: navigationLinks.length * 0.05 }}
+                <Button
+                  onClick={scrollToInsights}
+                  variant="default"
+                  size="lg" 
+                  className="w-full mt-2 justify-center"
                 >
                   Get Started
-                </motion.a>
+                </Button>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+      
+      {/* Add styles for the section highlight effect */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        .scroll-highlight {
+          position: relative;
+        }
+        
+        .scroll-highlight::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border: 2px solid var(--accent);
+          opacity: 0;
+          z-index: -1;
+          border-radius: 1rem;
+          animation: pulse-border 1.5s ease-out;
+        }
+        
+        @keyframes pulse-border {
+          0% {
+            transform: scale(0.95);
+            opacity: 0.7;
+          }
+          70% {
+            transform: scale(1.02);
+            opacity: 0.2;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 0;
+          }
+        }
+        `
+      }} />
     </header>
   );
 }
