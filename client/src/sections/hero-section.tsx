@@ -142,15 +142,52 @@ export function HeroSection() {
               className="flex flex-wrap gap-4 items-center"
             >
               <Button
-                asChild
                 size="lg"
                 className="bg-primary text-white font-medium py-6 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-[16px]"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const insightsSection = document.getElementById('insights');
+                  
+                  if (insightsSection) {
+                    // Add highlight effect
+                    insightsSection.classList.add('scroll-highlight');
+                    
+                    // Smooth scroll
+                    window.scrollTo({
+                      top: insightsSection.offsetTop - 80,
+                      behavior: 'smooth'
+                    });
+                    
+                    // Remove highlight after animation
+                    setTimeout(() => {
+                      insightsSection.classList.remove('scroll-highlight');
+                    }, 1500);
+                  }
+                }}
               >
-                <a href="/#about">Get Started</a>
+                Get Started
+                <i className="fas fa-chevron-right ml-2 text-xs"></i>
               </Button>
               
               <a 
                 href="/#services" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  const servicesSection = document.getElementById('services');
+                  
+                  if (servicesSection) {
+                    servicesSection.classList.add('scroll-highlight');
+                    
+                    window.scrollTo({
+                      top: servicesSection.offsetTop - 80,
+                      behavior: 'smooth'
+                    });
+                    
+                    setTimeout(() => {
+                      servicesSection.classList.remove('scroll-highlight');
+                    }, 1500);
+                  }
+                }}
                 className="flex items-center text-neutral-700 font-medium hover:text-primary transition-colors duration-300"
               >
                 <span className="mr-2">Explore Services</span>

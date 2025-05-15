@@ -187,12 +187,109 @@ export function ServicesSection() {
                 )}
                 
                 <div className="flex justify-between items-center">
-                  <Button variant="soft" size="sm">
+                  <Button 
+                    variant="soft" 
+                    size="sm"
+                    onClick={() => {
+                      // Create and show a modal with service details
+                      const modal = document.createElement('div');
+                      modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50';
+                      modal.innerHTML = `
+                        <div class="relative max-w-lg w-full bg-white rounded-2xl shadow-xl p-6 animate-in fade-in slide-in-from-bottom-5">
+                          <div class="absolute top-4 right-4">
+                            <button id="close-modal" class="p-2 rounded-full hover:bg-neutral-100">
+                              <i class="fas fa-times text-neutral-500"></i>
+                            </button>
+                          </div>
+                          <div class="flex items-center gap-4 mb-6">
+                            <div class="${service.iconBg} w-12 h-12 rounded-xl flex items-center justify-center">
+                              <i class="${service.icon} ${service.iconColor} text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">${service.title}</h3>
+                          </div>
+                          <p class="text-neutral-700 mb-6 leading-relaxed">${service.description}</p>
+                          ${service.features ? `
+                            <div class="mb-6">
+                              <h4 class="text-sm font-semibold uppercase tracking-wider text-neutral-500 mb-3">Key Features</h4>
+                              <ul class="space-y-2">
+                                ${service.features.map(feature => `
+                                  <li class="flex items-baseline gap-2 text-neutral-700">
+                                    <span class="text-primary"><i class="fas fa-check-circle"></i></span>
+                                    <span>${feature}</span>
+                                  </li>
+                                `).join('')}
+                              </ul>
+                            </div>
+                          ` : ''}
+                          <div class="mt-6 pt-6 border-t border-neutral-200 flex justify-end">
+                            <button id="contact-from-modal" class="px-4 py-2 bg-primary text-white rounded-lg shadow-sm">
+                              Contact Us About This Service
+                            </button>
+                          </div>
+                        </div>
+                      `;
+                      
+                      document.body.appendChild(modal);
+                      
+                      // Add event listeners for the modal
+                      document.getElementById('close-modal')?.addEventListener('click', () => {
+                        document.body.removeChild(modal);
+                      });
+                      
+                      document.getElementById('contact-from-modal')?.addEventListener('click', () => {
+                        document.body.removeChild(modal);
+                        const contactSection = document.getElementById('contact');
+                        if (contactSection) {
+                          contactSection.classList.add('scroll-highlight');
+                          
+                          window.scrollTo({
+                            top: contactSection.offsetTop - 80,
+                            behavior: 'smooth'
+                          });
+                          
+                          setTimeout(() => {
+                            contactSection.classList.remove('scroll-highlight');
+                          }, 1500);
+                          
+                          // Pre-fill the contact form if available
+                          const subjectField = document.querySelector('input[name="subject"]') as HTMLInputElement;
+                          if (subjectField) {
+                            subjectField.value = `Information about ${service.title}`;
+                          }
+                        }
+                      });
+                    }}
+                  >
                     Learn More
                     <i className="fas fa-arrow-right text-xs ml-1"></i>
                   </Button>
                   
-                  <Button variant="ghost" size="sm">
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => {
+                      // Scroll to contact section
+                      const contactSection = document.getElementById('contact');
+                      if (contactSection) {
+                        contactSection.classList.add('scroll-highlight');
+                        
+                        window.scrollTo({
+                          top: contactSection.offsetTop - 80,
+                          behavior: 'smooth'
+                        });
+                        
+                        setTimeout(() => {
+                          contactSection.classList.remove('scroll-highlight');
+                        }, 1500);
+                        
+                        // Pre-fill the contact form if available
+                        const subjectField = document.querySelector('input[name="subject"]') as HTMLInputElement;
+                        if (subjectField) {
+                          subjectField.value = `Request information about ${service.title}`;
+                        }
+                      }
+                    }}
+                  >
                     Request Info
                   </Button>
                 </div>
