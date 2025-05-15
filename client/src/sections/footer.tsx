@@ -6,10 +6,10 @@ interface FooterLink {
 }
 
 const quickLinks: FooterLink[] = [
-  { name: "About Us", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Blog", href: "#insights" },
-  { name: "Contact", href: "#contact" }
+  { name: "About Us", href: "/#about" },
+  { name: "Services", href: "/#services" },
+  { name: "Blog", href: "/blog" },
+  { name: "Contact", href: "/#contact" }
 ];
 
 const serviceLinks: FooterLink[] = [
