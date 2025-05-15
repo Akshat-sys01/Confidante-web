@@ -18,22 +18,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Validate request body
       const validatedData = contactSchema.parse(req.body);
       
-      // In a real implementation, this would send an email
-      // Since we don't want to implement an actual email service here,
-      // we'll just log the data and return a success response
+      // Log the data (for server-side record)
       console.log("Contact form submission:", validatedData);
       
-      // You could use a service like EmailJS, Formspree, or Nodemailer in production
-      // For example with Nodemailer:
-      // await sendEmail({
-      //   to: "your-email@example.com",
-      //   subject: `Contact Form: ${validatedData.subject || 'New Message'}`,
-      //   text: `From: ${validatedData.name} (${validatedData.email})\n\n${validatedData.message}`
-      // });
+      // Note: Our actual email sending happens on the client-side using EmailJS
+      // This endpoint acts as a fallback and validation layer
+      
+      // We can still store the contact message in the database if needed
+      // This would be implemented in a production environment
       
       return res.status(200).json({ 
         success: true, 
-        message: "Thank you for your message. We'll get back to you soon." 
+        message: "Thank you for your message. We'll get back to you soon.",
+        // Include recipient email in the response for client-side reference
+        recipientEmail: "rakshat6501@gmail.com"
       });
     } catch (error) {
       console.error("Contact form error:", error);

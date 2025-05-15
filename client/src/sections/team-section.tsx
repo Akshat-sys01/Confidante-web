@@ -10,6 +10,7 @@ interface TeamMember {
   socialLinks: {
     linkedin?: string;
     twitter?: string;
+    instagram?: string;
     github?: string;
     website?: string;
   };
@@ -84,6 +85,11 @@ export function TeamSection() {
                   {member.socialLinks.linkedin && (
                     <a href={member.socialLinks.linkedin} className="text-neutral-800/60 hover:text-primary transition-colors">
                       <i className="fab fa-linkedin-in"></i>
+                    </a>
+                  )}
+                  {member.socialLinks.instagram && (
+                    <a href={member.socialLinks.instagram} className="text-neutral-800/60 hover:text-primary transition-colors">
+                      <i className="fab fa-instagram"></i>
                     </a>
                   )}
                   {member.socialLinks.twitter && (
