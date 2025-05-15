@@ -17,19 +17,19 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: "Sarah Johnson",
-    role: "Co-Founder & CEO",
-    bio: "Former healthcare executive with a passion for making wellness education accessible to all communities.",
+    name: "Shreya Mittal",
+    role: "Founder",
+    bio: "Passionate about holistic wellness education and committed to transforming health education for schools and communities.",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700",
     roleColor: "text-primary",
     socialLinks: {
-      linkedin: "#",
-      twitter: "#"
+      linkedin: "https://www.linkedin.com/company/your-confidante/posts/?feedView=all",
+      instagram: "https://www.instagram.com/your.confidante/"
     }
   },
   {
     name: "Michael Chen",
-    role: "Co-Founder & CTO",
+    role: "Lead Developer",
     bio: "Technology innovator with a background in health informatics and a mission to leverage tech for mental health education.",
     image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700",
     roleColor: "text-secondary",

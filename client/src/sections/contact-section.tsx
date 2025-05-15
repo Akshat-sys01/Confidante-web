@@ -12,29 +12,23 @@ const contactInfo: ContactInfo[] = [
   {
     icon: "fas fa-envelope",
     title: "Email",
-    content: <p className="text-neutral-800/70">hello@confidante.com</p>
+    content: <p className="text-neutral-800/70">helpatconfidante@gmail.com</p>
   },
   {
     icon: "fas fa-phone-alt",
     title: "Phone",
-    content: <p className="text-neutral-800/70">(555) 123-4567</p>
-  },
-  {
-    icon: "fas fa-map-marker-alt",
-    title: "Location",
     content: (
-      <p className="text-neutral-800/70">
-        123 Wellness Way<br />San Francisco, CA 94110
-      </p>
+      <div className="text-neutral-800/70">
+        <p>+91 98391 54888</p>
+        <p className="mt-1">+91 75058 43873</p>
+      </div>
     )
   }
 ];
 
 const socialLinks = [
-  { icon: "fab fa-twitter", href: "#" },
-  { icon: "fab fa-instagram", href: "#" },
-  { icon: "fab fa-linkedin-in", href: "#" },
-  { icon: "fab fa-facebook-f", href: "#" }
+  { icon: "fab fa-instagram", href: "https://www.instagram.com/your.confidante/" },
+  { icon: "fab fa-linkedin-in", href: "https://www.linkedin.com/company/your-confidante/posts/?feedView=all" }
 ];
 
 export function ContactSection() {

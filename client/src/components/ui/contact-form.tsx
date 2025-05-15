@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from 'emailjs-com';
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -15,9 +16,27 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+// EmailJS constants
+const EMAILJS_SERVICE_ID = 'service_id'; // Replace with your service ID when provided
+const EMAILJS_TEMPLATE_ID = 'template_id'; // Replace with your template ID when provided
+const EMAILJS_USER_ID = 'user_id'; // Replace with your user ID when provided
+
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailjsInitialized, setEmailjsInitialized] = useState(false);
   const { toast } = useToast();
+  
+  // Initialize EmailJS
+  useEffect(() => {
+    if (!emailjsInitialized) {
+      try {
+        emailjs.init(EMAILJS_USER_ID);
+        setEmailjsInitialized(true);
+      } catch (error) {
+        console.error("EmailJS initialization error:", error);
+      }
+    }
+  }, [emailjsInitialized]);
   
   const {
     register,
@@ -37,7 +56,22 @@ export function ContactForm() {
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     try {
-      await apiRequest("POST", "/api/contact", data);
+      // Create a template parameters object
+      const templateParams = {
+        from_name: data.name,
+        reply_to: data.email,
+        to_email: 'rakshat6501@gmail.com',
+        subject: data.subject || 'New Contact Form Submission',
+        message: data.message
+      };
+      
+      // Try to send using EmailJS
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams
+      );
+      
       toast({
         title: "Message sent!",
         description: "Thank you for reaching out. We'll get back to you soon.",
@@ -45,12 +79,25 @@ export function ContactForm() {
       });
       reset();
     } catch (error) {
-      toast({
-        title: "Something went wrong",
-        description: "Your message could not be sent. Please try again later.",
-        variant: "destructive",
-      });
       console.error("Form submission error:", error);
+      
+      // Fallback to regular API if EmailJS fails
+      try {
+        await apiRequest("POST", "/api/contact", data);
+        toast({
+          title: "Message sent!",
+          description: "Thank you for reaching out. We'll get back to you soon.",
+          variant: "default",
+        });
+        reset();
+      } catch (apiError) {
+        toast({
+          title: "Something went wrong",
+          description: "Your message could not be sent. Please try again later.",
+          variant: "destructive",
+        });
+        console.error("API request error:", apiError);
+      }
     } finally {
       setIsSubmitting(false);
     }
